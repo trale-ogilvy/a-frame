@@ -26,12 +26,13 @@
         <a-camera wasd-controls="enabled:false"></a-camera>
       </a-entity>
     </a-scene>
-    <div class="controls">
+    <!-- <div class="controls">
       <div ref="KeyW" class="button" @click="onClick('KeyW')">W</div>
       <div ref="KeyA" class="button" @click="onClick('KeyA')">A</div>
       <div ref="KeyS" class="button" @click="onClick('KeyS')">S</div>
       <div ref="KeyD" class="button" @click="onClick('KeyD')">D</div>
-    </div>
+    </div> -->
+    <game @dance="onDance($event)"></game>
   </div>
 </template>
 <style scoped>
@@ -71,44 +72,56 @@
 <script>
 import Vue from "vue";
 import AFRAME from "aframe";
+import Game from "../components/Game.vue";
 require("aframe-extras");
 Vue.use(AFRAME);
 export default {
-  components: {},
+  components: { Game },
   mounted() {
-    
     // console.log(deadpool.components["animation-mixer"].attrValue);
-    document.addEventListener("keypress", (e) => {
-      this.onClick(e.code)
-    });
+    // document.addEventListener("keypress", (e) => {
+    //   this.onClick(e.code);
+    // });
   },
   methods: {
-    onClick(key) {
-      this.$refs[key]?.classList.add("active");
-      setTimeout(() => {
-        this.$refs[key]?.classList.remove("active");
-      }, 100);
+    // onClick(key) {
+    //   this.$refs[key]?.classList.add("active");
+    //   setTimeout(() => {
+    //     this.$refs[key]?.classList.remove("active");
+    //   }, 100);
+    //   const deadpool = this.$el.querySelector("#deadpool");
+    //   switch (key) {
+    //     case "KeyW":
+    //       deadpool.setAttribute("animation-mixer", { clip: "chick" });
+    //       return;
+    //     case "KeyA":
+    //       deadpool.setAttribute("animation-mixer", { clip: "gang" });
+    //       return;
+    //     case "KeyS":
+    //       deadpool.setAttribute("animation-mixer", { clip: "hip" });
+    //       return;
+    //     case "KeyD":
+    //       deadpool.setAttribute("animation-mixer", { clip: "ymca" });
+    //       return;
+    //     case "Space":
+    //       deadpool.setAttribute("animation-mixer", { clip: "mixamo.com" });
+    //       return;
+    //     default:
+    //       return;
+    //   }
+    // },
+    onDance(event) {
       const deadpool = this.$el.querySelector("#deadpool");
-      switch (key) {
-        case "KeyW":
-          deadpool.setAttribute("animation-mixer", { clip: "chick" });
-          return;
-        case "KeyA":
-          deadpool.setAttribute("animation-mixer", { clip: "gang" });
-          return;
-        case "KeyS":
-          deadpool.setAttribute("animation-mixer", { clip: "hip" });
-          return;
-        case "KeyD":
-          deadpool.setAttribute("animation-mixer", { clip: "ymca" });
-          return;
-        case "Space":
+      switch (event) {
+        case 'miss':
+        case 'too-soon':
           deadpool.setAttribute("animation-mixer", { clip: "mixamo.com" });
-          return;
-        default:
-          return;
+          break
+        default: 
+          deadpool.setAttribute("animation-mixer", { clip: "hip" });
+          break
       }
-    },
+    }
   },
 };
 </script>
